@@ -2,14 +2,14 @@
   "name": "book-review-starter",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Md Rakibul Hasan",
+  "author": "Rakib Hassan",
   "license": "MIT",
   "scripts": {
     "postinstall": "npx prisma migrate dev --name init",
     "build": "tsc",
     "start": "node ./dist/server.js",
     "start:prod": "node ./dist/server.js",
-    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
