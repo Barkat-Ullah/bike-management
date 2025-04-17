@@ -3,7 +3,7 @@ import { customerController } from "./customer.controller";
 
 const router = express.Router();
 router.patch("/:id", customerController.updateCustomer);
-// router.delete("/",customerController);
+router.delete("/:id", customerController.deleteCustomer);
 router.post("/", customerController.createCustomer);
 router.get("/", customerController.getCustomers);
 router.get("/:id", customerController.getCustomerById);

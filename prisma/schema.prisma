@@ -21,7 +21,7 @@ model Customer {
 
 model Bike {
   id         String    @id @default(uuid())
-  brand      BikeBrand
+  brand      String
   model      String
   year       Int
   customerId String
@@ -45,11 +45,4 @@ enum Status {
   pending
   inprogress
   done
-}
-
-enum BikeBrand {
-  HONDA
-  YAMAHA
-  SUZUKI
-  TVS
 }

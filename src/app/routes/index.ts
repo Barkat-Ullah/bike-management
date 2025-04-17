@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { customerRoutes } from "../modules/customer/customer.route";
 import { bikeRoutes } from "../modules/bike/bike.route";
-import { serviceRoutes } from "../modules/service/service.route";
+import { serviceRoutes } from "../modules/service/services.route";
 
 const router = Router();
 const moduleRoutes = [
