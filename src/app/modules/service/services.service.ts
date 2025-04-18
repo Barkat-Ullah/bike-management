@@ -1,4 +1,4 @@
-import { PrismaClient, Service } from "@prisma/client";
+import { PrismaClient, Service, Status } from "@prisma/client";
 
 // service.service.ts
 const prisma = new PrismaClient();
@@ -25,9 +25,24 @@ const completeService = async (id: string, completionDate?: Date) => {
   });
 };
 
+const getPendingService = async () => {
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const filterStatus: Status[] = ["pending", "inprogress"];
+
+  return await prisma.service.findMany({
+    where: {
+      serviceDate: { lt: sevenDaysAgo },
+      status: { in: filterStatus },
+    },
+  });
+};
+
 export const servicesService = {
   createService,
   getAllServices,
   getSingleService,
   completeService,
+  getPendingService,
 };

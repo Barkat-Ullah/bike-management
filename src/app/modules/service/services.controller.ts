@@ -47,9 +47,21 @@ const markServiceCompleted = catchAsync(async (req, res) => {
   });
 });
 
+export const getPendingServices = catchAsync(async (_req, res) => {
+  const result = await servicesService.getPendingService();
+
+  sendResponse(res, {
+    success: true,
+    message: "Overdue or pending services fetched successfully",
+    statusCode: 200,
+    data: result,
+  });
+});
+
 export const servicesController = {
   createService,
   getAllServices,
   getServiceById,
   markServiceCompleted,
+  getPendingServices,
 };
