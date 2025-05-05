@@ -1,8 +1,14 @@
 import { Bike, PrismaClient } from "@prisma/client";
+import { TBike } from "./bike.interface";
 
 const prisma = new PrismaClient();
 // Create Bike into DB
-const createBikeIntoDB = async (payLoad: Bike) => {
+const createBikeIntoDB = async (payLoad: TBike) => {
+  await prisma.customer.findUniqueOrThrow({
+    where: {
+      customerId: payLoad.customerId,
+    },
+  });
   const result = await prisma.bike.create({
     data: payLoad,
   });
@@ -15,18 +21,24 @@ const getBikesFromDB = async () => {
 };
 
 const getBikeByIdFromDB = async (id: string) => {
-  const result = await prisma.bike.findUnique({ where: { id } });
+  const result = await prisma.bike.findUnique({
+    where: {
+      bikeId: id,
+    },
+  });
   return result;
 };
 
 const updateBikeFromDB = async (id: string, payload: Partial<Bike>) => {
   const result = await prisma.$transaction(async (transactionClient) => {
     await transactionClient.bike.findUniqueOrThrow({
-      where: { id },
+      where: {
+        bikeId: id,
+      },
     });
 
     const updatedBike = await transactionClient.bike.update({
-      where: { id },
+      where: { bikeId: id },
       data: payload,
     });
 
@@ -52,7 +64,7 @@ const updateBikeFromDB = async (id: string, payload: Partial<Bike>) => {
 
 const deleteBikeFromDB = async (id: string) => {
   const result = await prisma.bike.delete({
-    where: { id },
+    where: { bikeId: id },
   });
   return result;
 };

@@ -15,18 +15,24 @@ const getCustomersFromDB = async () => {
 };
 
 const getCustomerByIdFromDB = async (id: string) => {
-  const result = await prisma.customer.findUnique({ where: { id } });
+  const result = await prisma.customer.findUnique({
+    where: { customerId: id },
+  });
   return result;
 };
 
 const updateCustomerFromDB = async (id: string, payload: Partial<Customer>) => {
   const result = await prisma.$transaction(async (transactionClient) => {
     await transactionClient.customer.findUniqueOrThrow({
-      where: { id },
+      where: {
+        customerId: id,
+      },
     });
 
     const updatedCustomer = await transactionClient.customer.update({
-      where: { id },
+      where: {
+        customerId: id,
+      },
       data: payload,
     });
 
@@ -52,7 +58,9 @@ const updateCustomerFromDB = async (id: string, payload: Partial<Customer>) => {
 
 const deleteCustomerFromDB = async (id: string) => {
   const result = await prisma.customer.delete({
-    where: { id },
+    where: {
+      customerId: id,
+    },
   });
   return result;
 };

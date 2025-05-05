@@ -1,9 +1,15 @@
 import { PrismaClient, Service, Status } from "@prisma/client";
+import { TService } from "./services.interface";
 
 // service.service.ts
 const prisma = new PrismaClient();
 
-const createService = async (payload: Service) => {
+const createService = async (payload: TService) => {
+  await prisma.bike.findUniqueOrThrow({
+    where: {
+      bikeId: payload.bikeId,
+    },
+  });
   const result = await prisma.service.create({ data: payload });
   return result;
 };
@@ -13,11 +19,11 @@ const getAllServices = async () => {
 };
 
 const getSingleService = async (id: string) => {
-  return await prisma.service.findUniqueOrThrow({ where: { id } });
+  return await prisma.service.findUniqueOrThrow({ where: { serviceId: id } });
 };
 const completeService = async (id: string, completionDate?: Date) => {
   return await prisma.service.update({
-    where: { id },
+    where: { serviceId: id },
     data: {
       status: "done",
       completionDate: completionDate ?? new Date(),
