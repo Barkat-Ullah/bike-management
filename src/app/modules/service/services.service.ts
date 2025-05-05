@@ -19,6 +19,7 @@ const getAllServices = async () => {
 };
 
 const getSingleService = async (id: string) => {
+  console.log("id", id);
   return await prisma.service.findUniqueOrThrow({ where: { serviceId: id } });
 };
 const completeService = async (id: string, completionDate?: Date) => {
